@@ -8,6 +8,8 @@ module.exports = {
     'padding-line-between-statements': 'off',
     "eol-last": "off",
     "no-trailing-spaces": "off",
+    "semi": "off"
+
 
 
   },

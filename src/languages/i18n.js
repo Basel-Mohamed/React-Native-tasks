@@ -1,9 +1,12 @@
 import i18n from "i18next";
-import { useTranslation, initReactI18next } from "react-i18next";
+import { initReactI18next } from "react-i18next";
 import { I18nManager } from 'react-native';
-
 import en from './en';
 import ar from './ar';
+import RNRestart from 'react-native-restart';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 
 const resources = {
   en: {
@@ -14,29 +17,31 @@ const resources = {
   },
 };
 
+// Initialize RTL settings
+I18nManager.allowRTL(true);
+I18nManager.forceRTL(false); // Set to false for English (LTR)
+
 i18n
-  .use(initReactI18next) // passes i18n down to react-i18next
+  .use(initReactI18next)
   .init({
-    // the translations
-    // (tip move them in a JSON file and import them,
-    // or even better, manage them via a UI: https://react.i18next.com/guides/multiple-translation-files#manage-your-translations-with-a-management-gui)
     resources,
-    lng: "ar", // if you're using a language detector, do not define the lng option
-    fallbackLng: "ar",
+    // defult languge is English
+    lng: "en", 
+    // Fallback to English if translation is missing
+    fallbackLng: "en", 
     compatibilityJSON: 'v3',
     interpolation: {
-      escapeValue: false 
+      escapeValue: false
     }
   });
 
-// Initialize RTL for Arabic
-I18nManager.allowRTL(true);
-I18nManager.forceRTL(true);
-
-export const changeLanguage = lng => {
-  i18n.changeLanguage(lng);
-  I18nManager.allowRTL(lng === 'ar');
-  I18nManager.forceRTL(lng === 'ar');
-};
+  export const changeLanguage = async (lng) => {
+    await AsyncStorage.setItem('lang', lng);
+    i18n.changeLanguage(lng).then(() => {
+      I18nManager.allowRTL(lng === 'ar');
+      I18nManager.forceRTL(lng === 'ar');
+      RNRestart.Restart();
+    });
+  };
 
 export default i18n;

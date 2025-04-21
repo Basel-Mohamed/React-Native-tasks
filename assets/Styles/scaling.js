@@ -1,33 +1,19 @@
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 const isSmall = width <= 375 && !DeviceInfo.hasNotch();
-const guidLineBaseWidth = () => {
-  if (isSmall) {
-    return 330;
-  }
-  return 350;
-};
-const guidLineBaseHeight = () => {
-  if (isSmall) {
-    return 550;
-  } else if (width > 410) {
-    return 620;
-  }
-  return 680;
-};
+const isTablet = DeviceInfo.isTablet();
 
-const horizontalScale = size => (width / guidLineBaseWidth()) * size;
-const verticalScale = size => (height / guidLineBaseHeight()) * size;
+// base values
+const guidelineBaseWidth = isTablet ? 768 : (isSmall ? 360 : 400);
+const guidelineBaseHeight = isTablet ? 1024 : (isSmall ? 640 : 720);
 
-const guidLineBaseFonts = () => {
-  if (width > 410) {
-    return 430;
-  }
-  return 400;
-};
+// based on phone or tablet
+const guidelineBaseFonts = isTablet ? 800 : 414; 
 
-const scaleFontSize = (size) => (Math.round((width / guidLineBaseFonts()) * size));
+const horizontalScale = size => (width / guidelineBaseWidth) * size;
+const verticalScale = size => (height / guidelineBaseHeight) * size;
+const scaleFontSize = size => Math.round((width / guidelineBaseFonts) * size);
 
-export {verticalScale, horizontalScale, scaleFontSize};
+export { verticalScale, horizontalScale, scaleFontSize };

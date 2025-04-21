@@ -85,6 +85,15 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    // ADD THE FOLLOWING CONFIGURATION HERE
+    configurations.all {
+        resolutionStrategy {
+            force "androidx.core:core:1.13.1"
+            // Exclude the older support libraries
+            exclude group: 'com.android.support', module: 'support-compat'
+        }
+    }
+    // END OF ADDED CONFIGURATION
     signingConfigs {
         debug {
             storeFile file('debug.keystore')

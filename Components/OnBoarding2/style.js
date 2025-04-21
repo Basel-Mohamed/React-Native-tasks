@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native';
-import {setFontFamily} from '../../assets/fonts/Helper';
 
 const styles = StyleSheet.create({
   Container: {
@@ -17,18 +16,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 32,
     alignItems: 'center',
-  },
-  textTitle: {
-    textAlign: 'center',
-    fontFamily: setFontFamily('700'),
-    fontSize: 18,
-        marginBottom:16
-
-  },
-  textBody: {
-    textAlign: 'center',
-    fontFamily: setFontFamily('400'),
-    fontSize: 16,
+    gap: 16
   },
 });
 

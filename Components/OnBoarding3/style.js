@@ -1,5 +1,4 @@
 import {StyleSheet, Dimensions} from 'react-native';
-import {setFontFamily} from '../../assets/fonts/Helper';
 
 const {width} = Dimensions.get('window');
 
@@ -14,17 +13,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     marginTop: 91,
     alignItems: 'center',
-  },
-  textTitle: {
-    textAlign: 'center',
-    fontFamily: setFontFamily('700'),
-    fontSize: 18,
-    marginBottom: 16,
-  },
-  textBody: {
-    textAlign: 'center',
-    fontFamily: setFontFamily('400'),
-    fontSize: 16,
+    gap:16
   },
   imageContainer: {
     height: 550,

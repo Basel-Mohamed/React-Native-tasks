@@ -2,7 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import { Animated, Easing } from 'react-native';
 import styles from './style';
 
-const CircleIcon = ({ color, delay = 0 }) => {
+
+
+
+const CircleIcon = ({ color = "#000", delay = 0 }) => {
   const translateY = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {

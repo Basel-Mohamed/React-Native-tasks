@@ -1,15 +1,24 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {View, ScrollView, Dimensions, TouchableOpacity} from 'react-native';
 import OnBoarding1 from '../../Components/OnBoarding1/OnBoarding1';
 import OnBoarding2 from '../../Components/OnBoarding2/OnBoarding2';
 import styles from './style';
 import OnBoarding3 from '../../Components/OnBoarding3/OnBoarding3';
+import { useTranslation } from 'react-i18next';
 
 const {width} = Dimensions.get('window');
 
 export default function OnBoardingScreen() {
   const [currentPage, setCurrentPage] = useState(0);
   const scrollViewRef = useRef(null);
+  const { i18n } = useTranslation();
+  const [isRTL, setIsRTL] = useState(i18n.language === 'ar');
+
+  // Update RTL state when language changes
+  useEffect(() => {
+    setIsRTL(i18n.language === 'ar');
+  }, [i18n.language]);
+
   // number of pages
   const totalPages = 3;
 
@@ -53,21 +62,25 @@ export default function OnBoardingScreen() {
         </View>
       </ScrollView>
 
-      {/* indeictor */}
-      {currentPage !== 2 && (
+      {/* indicator */}
+      {currentPage !== (isRTL ? 0 : 2) && (
         <View style={styles.paginationContainer}>
           {Array(totalPages)
             .fill()
-            .map((_, index) => (
-              <TouchableOpacity
-                key={index}
-                style={[
-                  styles.paginationDot,
-                  currentPage === index && styles.paginationDotActive,
-                ]}
-                onPress={() => goToPage(index)}
-              />
-            ))}
+            .map((_, index) => {
+              // Reverse the index for RTL
+              const displayIndex = isRTL ? totalPages - 1 - index : index;
+              return (
+                <TouchableOpacity
+                  key={index}
+                  style={[
+                    styles.paginationDot,
+                    currentPage === displayIndex && styles.paginationDotActive,
+                  ]}
+                  onPress={() => goToPage(displayIndex)}
+                />
+              );
+            })}
         </View>
       )}
     </View>
