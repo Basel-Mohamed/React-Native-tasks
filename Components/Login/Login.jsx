@@ -65,7 +65,7 @@ export default function Login() {
       );
 
       if (response.status >= 200 && response.status < 300) {
-        navigation.navigate('NewPage');
+        navigation.navigate('HomeScreen');
       } else {
         ToastAndroid.show(t('errors.loginFailed'), ToastAndroid.SHORT);
       }
